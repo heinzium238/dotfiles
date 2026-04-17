@@ -1,0 +1,8 @@
+#!/bin/bash
+
+STATE_FILE="/tmp/polybar-temp-zone"
+ZONES=("acpitz" "x86_pkg_temp" "INT3400 Thermal" "TCPU" "TCPU_PCI" "iwlwifi_1")
+
+CURRENT=$(cat "$STATE_FILE" 2>/dev/null || echo 0)
+NEXT=$(( (CURRENT + 1) % ${#ZONES[@]} ))
+echo $NEXT > "$STATE_FILE"

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+STATE_FILE="/tmp/polybar-temp-zone"
+
+# Available zones
+ZONES=(0 1 7 8 9 10)
+
+# Read current zone index
+CURRENT=$(cat "$STATE_FILE" 2>/dev/null || echo 0)
+
+ZONE_NUM=${ZONES[$CURRENT]}
+ZONE_PATH="/sys/class/thermal/thermal_zone$ZONE_NUM"
+TEMP=$(cat "$ZONE_PATH/temp" 2>/dev/null)
+TYPE=$(cat "$ZONE_PATH/type" 2>/dev/null)
+TEMP=$((TEMP / 1000))
+
+echo "$TEMP°C ($TYPE)"
